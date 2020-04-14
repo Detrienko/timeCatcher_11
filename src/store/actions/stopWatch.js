@@ -23,6 +23,20 @@ export const initializeStopWatches = (userId) => {
 	}
 }
 
+export const deleteStopWatch = (id) => {
+	return{
+		type: actionTypes.DELETE_STOPWATCH,
+		id: id	
+	}	
+}
+
+export const addStopWatch = (id) => {
+	return{
+		type: actionTypes.ADD_STOPWATCH,
+		id: id
+	}
+}
+
 export const saveCurrentStopwatchTime = (time, id, timerTime) => {
 	return{
 		type: actionTypes.SAVE_CURRENT_STOPWATCH_TIME,
@@ -62,5 +76,5 @@ export const saveTimerId = (timerId, id) => {
 	}
 }
 
-export default {initializeStopWatches}
+export default {initializeStopWatches, deleteStopWatch,addStopWatch}
 

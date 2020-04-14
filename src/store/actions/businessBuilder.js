@@ -20,20 +20,6 @@ export const addBusiness = (data) => {
 						minutes: 0
 					},
 					goalHours: data.goalHours,
-		      		goals: {
-			      		daylyGoal: {
-			      		  hours: 999999,
-			      		  minutes: 99999
-			      		},			
-			      		weeklyGoal: {
-			      		  hours: 9999,
-			      		  minutes: 0
-			      		},
-			      		monthlyGoal:{
-			      			hours: 99999,
-			      			minutes: 0
-			      		},
-					},	
 					description: 'nanana',
 					progress: 0,
 					isShown: true
@@ -43,7 +29,6 @@ export const addBusiness = (data) => {
 					type: actionTypes.ADD_BUSINESS,
 					data: data
 				})
-				dispatch(stopWatch.initializeStopWatches(localStorage.getItem('userId')))
 			})
 
 	}
@@ -66,8 +51,13 @@ export const deleteBusiness = (id) => {
 			userRef.update({
 	    		[path]: firebase.firestore.FieldValue.delete()
 			}).then(()=>{
-				dispatch(fetchBusinessDataBegin(userId))
-				dispatch(stopWatch.initializeStopWatches(userId))
+				dispatch({
+					type: actionTypes.DELETE_BUSINESS,
+					id: id
+				})
+				dispatch(stopWatch.deleteStopWatch(id))
+				// dispatch(fetchBusinessDataBegin(userId))
+				// dispatch(stopWatch.initializeStopWatches(userId))
 			})	 
 
 		}

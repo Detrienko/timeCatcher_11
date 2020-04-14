@@ -6,7 +6,6 @@ const BusinessTab = (props) => {
 
 	const findStopWatch = (stopWatches) => {
 		let index = stopWatches.findIndex((el)=>el.businessId==props.business.id);
-		console.log(index)
 		return stopWatches[index];
 	}
 	const stopWatches = useSelector(state=>state.stopWatch.stopWatches)

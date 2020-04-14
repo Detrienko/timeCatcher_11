@@ -59,13 +59,38 @@ const reducer = (state=initialState, action) => {
 
 		case actionTypes.ADD_BUSINESS:
 			{
-				let newState = Object.assign({}, state);
+				let newBusiness = [...state.business]
 
-				for(let i = 0; i < newState.business.length; i++){
-					newState.business[i].isShown = false;
+				for(let i = 0; i < newBusiness.length; i++){
+					newBusiness[i].isShown = false;
 				}	
 				
-				// newState.business.push(action.data);
+				// let newBusinessData = {
+				// 	id: action.data.id,
+				// 	title: action.data.title,
+				// 	totalHours: {
+	   //    			  hours: action.data.totalHours.hours,
+	   //    			  minutes: action.data.totalHours.minutes
+	   //    			},
+	   //    			description: action.data.description,
+				// 	progress: action.data.progress, 
+				// 		goalHours: action.data.goalHours,
+	   //    				daylyGoal: {
+	   //    				  hours: action.data.daylyGoal.hours,
+	   //    				  minutes: action.data.daylyGoal.minutes
+	   //    				},
+	   //    				weeklyGoal: {
+	   //    				  hours: action.data.weeklyGoal.hours,
+	   //    				  minutes: action.data.weeklyGoal.minutes
+	   //    				},
+	   //    				monthlyGoal:{
+	   //    				  hours: action.data.monthlyGoal.hours,
+	   //    				  minutes: action.data.monthlyGoal.minutes
+	   //    				},
+	   //    				stopWatchIsShown: true,
+	   //    				isShown: true
+	   //    			}
+
 				let newBusinessData = {
 					id: action.data.id,
 					title: action.data.title,
@@ -75,28 +100,36 @@ const reducer = (state=initialState, action) => {
 	      			},
 	      			description: action.data.description,
 					progress: action.data.progress, 
-						goalHours: action.data.goalHours,
-	      				daylyGoal: {
-	      				  hours: action.data.daylyGoal.hours,
-	      				  minutes: action.data.daylyGoal.minutes
-	      				},
-	      				weeklyGoal: {
-	      				  hours: action.data.weeklyGoal.hours,
-	      				  minutes: action.data.weeklyGoal.minutes
-	      				},
-	      				monthlyGoal:{
-	      				  hours: action.data.monthlyGoal.hours,
-	      				  minutes: action.data.monthlyGoal.minutes
-	      				},
 	      				stopWatchIsShown: true,
 	      				isShown: true
 	      			}
 
-				newState.business.push(newBusinessData);
+				newBusiness.push(newBusinessData);
+
+				let newState = {
+					business: newBusiness,
+					loading: false,
+					error: null	
+				}
 
 				return newState;
 			}	
 
+		case actionTypes.DELETE_BUSINESS:
+			{
+				let newBusiness = [...state.business];
+				let index = newBusiness.findIndex(el=>el.id==action.id);
+				newBusiness.splice(index, 1)
+				
+
+				let newState = {
+					business: newBusiness,
+					loading: false,
+					error: null
+				}
+				return newState;	
+
+			}
 		case actionTypes.SWITCH_BUSINESS_TAB:
 			{
 				let newState = Object.assign({}, state);
@@ -191,7 +224,6 @@ const reducer = (state=initialState, action) => {
 					let newBusinessDataObj;
 					for(let i = 0; i<idOfBusinesses.length; i++){
 						let currentBusiness = action.userBusinesses.businesses[idOfBusinesses[i]];	
-						console.log(currentBusiness.goals.daylyGoal.hours)			
 					newBusinessDataObj = {
 						id: idOfBusinesses[i],
 						title: currentBusiness.title,
@@ -200,18 +232,6 @@ const reducer = (state=initialState, action) => {
 	      				  minutes: currentBusiness.totalHours.minutes
 	      				},
 						goalHours: currentBusiness.goals.goalHours,
-	      				daylyGoal: {
-	      				  hours: currentBusiness.goals.daylyGoal.hours,
-	      				  minutes: currentBusiness.goals.daylyGoal.minutes
-	      				},			
-	      				weeklyGoal: {
-	      				  hours: currentBusiness.goals.weeklyGoal.hours,
-	      				  minutes: currentBusiness.goals.weeklyGoal.minutes
-	      				},
-	      				monthlyGoal:{
-	      					hours: currentBusiness.goals.monthlyGoal.hours,
-	      					minutes: currentBusiness.goals.monthlyGoal.minutes
-	      				},
 						description: currentBusiness.description,
 						progress: currentBusiness.progress,
 

@@ -67,6 +67,50 @@ case actionTypes.INITIALIZE_STOPWATCHES_SUCCESS:
 				return newState;
 			}
 
+		case actionTypes.ADD_STOPWATCH:
+			{
+				let newStopWatches = [...state.stopWatches];
+
+				let newStopWatch = {
+					stopWatchIsShown: true,
+					   currentStopwatchTime: {
+						hours: '00',
+						minutes: '00',
+						seconds: '00',
+						centiseconds: '00'
+					},
+					timerTime: 0,
+					timerStart: 0,
+					timerOn: false,
+					timerId: null,
+					businessId: action.id 
+					}
+
+				newStopWatches.push(newStopWatch)
+
+				let newState = {
+					stopWatches: newStopWatches,
+					loading: false
+				}
+
+				return newState;
+			}
+
+		case actionTypes.DELETE_STOPWATCH:
+			{
+				let newStopWatches = [...state.stopWatches];
+				console.log(action.id)
+				let index = newStopWatches.findIndex(el=>el.businessId==action.id);
+				console.log(index)
+				newStopWatches.splice(index, 1)
+
+				let newState = {
+					stopWatches: newStopWatches,
+					loading: false
+				}
+				return newState;
+			}
+
 		case actionTypes.SAVE_CURRENT_STOPWATCH_TIME:
 			{
 				let newStopWatches = [...state.stopWatches];
@@ -172,6 +216,15 @@ case actionTypes.INITIALIZE_STOPWATCHES_SUCCESS:
 	  				stopWatches: newStopWatches
 	  			}
 	  			
+				return newState;
+			}
+
+		case actionTypes.CLEAR_STOPWATCH_STATE:
+			{
+				let newState = {
+					stopWatches: [],
+					loading: false,
+				}
 				return newState;
 			}
 

@@ -36,6 +36,8 @@ export const authFail = (error) => {
 export const logout = () => {
 	return (dispatch) => {
 		dispatch({type: actionTypes.AUTH_LOGOUT})
+		dispatch({type: actionTypes.CLEAR_STOPWATCH_STATE})
+		dispatch({type: actionTypes.CLEAR_BUSINESS_BUILDER_STATE})
 	}
 }
 
@@ -145,6 +147,7 @@ export const clearError = () => {
 		type: actionTypes.CLEAR_ERROR,
 	}
 }
+
 
 export default {auth, logout, authCheckState}
 

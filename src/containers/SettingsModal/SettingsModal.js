@@ -3,6 +3,7 @@ import classes from './settingsModal.module.css';
 
 import { connect } from 'react-redux';
 import * as businessBuilderActions from '../../store/actions/businessBuilder';
+import * as stopWatchActions from '../../store/actions/stopWatch';
 
 class SettingsModal extends Component {
 
@@ -14,6 +15,11 @@ class SettingsModal extends Component {
 	}
 
 	showRemovePopUp = () => {
+    let index = this.props.stopWatch.findIndex((el=>el.businessId==this.props.businessData.id)) 
+    if(this.props.stopWatch[index].timerOn){
+      alert('Please stop the current timer named ' + '\"' + this.props.businessData.title + '\"')
+      return false;
+    }
     document.getElementById('formCover2').style.display="block";
     document.getElementById('popUpContainer').style.display="flex";
     document.getElementById('settingsModal').style.opacity='.050';
@@ -71,12 +77,13 @@ class SettingsModal extends Component {
   const mapStateToProps = state => {
     return {
       business: state.businessBuilder.business,
+      stopWatch: state.stopWatch.stopWatches
     }
   }
 
 const mapDispatchToProps = dispatch => {
     return{
-      deleteBusiness: (id) => dispatch(businessBuilderActions.deleteBusiness(id))
+      deleteBusiness: (id) => dispatch(businessBuilderActions.deleteBusiness(id)),
     }
   }
 
